@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AES加解密</title>
+</head>
+<body>
+  <div id="root" style="width: 100%; height: 100%;"></div>
+</body>
+<script src="aes.min.js"></script>
+<script>
+	const KEY = CryptoJS.enc.Utf8.parse("an_established_string");
+	
+	/**
+	 * AES加密（需要先加载aes.min.js文件）
+	 */
+	function encrypt(plainText) {
+		return CryptoJS.AES.encrypt(plainText, KEY, {  
+			mode: CryptoJS.mode.ECB,  
+			padding: CryptoJS.pad.Pkcs7
+		}).toString();
+	}
+	
+	/**
+	 * AES解密
+	 */
+	function decrypt(encryptText) {
+		var decryptText = CryptoJS.AES.decrypt(encryptText, KEY, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+		return CryptoJS.enc.Utf8.stringify(decryptText).toString();
+	}
+	
+	window.onload = function() {
+		let encryptText = encrypt('admin');
+		console.log("加密文本：" + encryptText);
+		console.log("解密文本：" + decrypt(encryptText));
+	}
+</script>
+</html>
